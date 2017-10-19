@@ -63,10 +63,24 @@ java.lang.IllegalStateException: CONFIGURED_TARGET://vendor/github.com/openzipki
 
 Second problem
 ==============
+https://github.com/bazelbuild/rules_go/issues/943
 
 Uncomment in WORKSPACE
-````
+```
 #load("@io_bazel_rules_go//proto:def.bzl", "proto_register_toolchains")
 #proto_register_toolchains()
 ```
 
+```
+➜ bazel build -s //vendor/github.com/openzipkin/zipkin-go-opentracing/wire:go_default_library
+INFO: Found 1 target...
+>>>>> # //vendor/github.com/openzipkin/zipkin-go-opentracing/wire:wire_go_proto [action 'Generating into bazel-out/darwin_x86_64-fastbuild/bin/vendor/github.com/openzipkin/zipkin-go-opentracing/wire/wire_go_proto/github.com/openzipkin/zipkin-go-opentracing/wire']
+(cd /private/var/tmp/_bazel_oleg/5719c5a902b0dc796f1b682926f59dfc/execroot/__main__ && \
+  exec env - \
+  bazel-out/host/bin/external/com_github_google_protobuf/protoc '--go_out=:bazel-out/darwin_x86_64-fastbuild/bin/vendor/github.com/openzipkin/zipkin-go-opentracing/wire/wire_go_proto/' '--plugin=protoc-gen-go=bazel-out/host/bin/external/com_github_golang_protobuf/protoc-gen-go/protoc-gen-go' --descriptor_set_in bazel-out/darwin_x86_64-fastbuild/genfiles/vendor/github.com/openzipkin/zipkin-go-opentracing/wire/wire_proto-descriptor-set.proto.bin vendor/github.com/openzipkin/zipkin-go-opentracing/wire/wire.proto)
+ERROR: /Users/oleg/pp/bazel_vendor_bug/vendor/github.com/openzipkin/zipkin-go-opentracing/wire/BUILD.bazel:10:1: output 'vendor/github.com/openzipkin/zipkin-go-opentracing/wire/wire_go_proto/github.com/openzipkin/zipkin-go-opentracing/wire/wire.pb.go' was not created.
+ERROR: /Users/oleg/pp/bazel_vendor_bug/vendor/github.com/openzipkin/zipkin-go-opentracing/wire/BUILD.bazel:10:1: not all outputs were created or valid.
+Target //vendor/github.com/openzipkin/zipkin-go-opentracing/wire:go_default_library failed to build
+Use --verbose_failures to see the command lines of failed build steps.
+INFO: Elapsed time: 0.674s, Critical Path: 0.17s
+```
