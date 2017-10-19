@@ -1,0 +1,8 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["debug.go"],
+    importpath = "github.com/constabulary/gb/internal/debug",
+    visibility = ["//vendor/github.com/constabulary/gb:__subpackages__"],
+)

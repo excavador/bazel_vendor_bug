@@ -1,0 +1,72 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "alldocs.go",
+        "build.go",
+        "depset.go",
+        "doc.go",
+        "dot.go",
+        "env.go",
+        "flag.go",
+        "generate.go",
+        "help.go",
+        "info.go",
+        "list.go",
+        "main.go",
+        "plugin.go",
+        "signal.go",
+        "stringset.go",
+        "test.go",
+        "testflag.go",
+    ] + select({
+        "@io_bazel_rules_go//go/platform:darwin_amd64": [
+            "signal_unix.go",
+        ],
+        "@io_bazel_rules_go//go/platform:linux_amd64": [
+            "signal_unix.go",
+        ],
+        "@io_bazel_rules_go//go/platform:windows_amd64": [
+            "signal_notunix.go",
+        ],
+        "//conditions:default": [],
+    }),
+    importpath = "github.com/constabulary/gb/cmd/gb",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//vendor/github.com/constabulary/gb:go_default_library",
+        "//vendor/github.com/constabulary/gb/cmd:go_default_library",
+        "//vendor/github.com/constabulary/gb/cmd/gb/internal/match:go_default_library",
+        "//vendor/github.com/constabulary/gb/internal/debug:go_default_library",
+        "//vendor/github.com/constabulary/gb/internal/vendor:go_default_library",
+        "//vendor/github.com/constabulary/gb/test:go_default_library",
+        "//vendor/github.com/pkg/errors:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "gb",
+    importpath = "github.com/constabulary/gb/cmd/gb",
+    library = ":go_default_library",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = [
+        "stringset_test.go",
+        "testflag_test.go",
+    ],
+    importpath = "github.com/constabulary/gb/cmd/gb",
+    library = ":go_default_library",
+)
+
+go_test(
+    name = "go_default_xtest",
+    srcs = [
+        "depfile_test.go",
+        "gb_test.go",
+    ],
+    importpath = "github.com/constabulary/gb/cmd/gb_test",
+)

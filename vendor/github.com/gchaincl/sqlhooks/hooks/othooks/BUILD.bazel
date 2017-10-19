@@ -1,0 +1,27 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["othooks.go"],
+    importpath = "github.com/gchaincl/sqlhooks/hooks/othooks",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/opentracing/opentracing-go:go_default_library",
+        "//vendor/github.com/opentracing/opentracing-go/log:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["othooks_test.go"],
+    importpath = "github.com/gchaincl/sqlhooks/hooks/othooks",
+    library = ":go_default_library",
+    deps = [
+        "//vendor/github.com/gchaincl/sqlhooks:go_default_library",
+        "//vendor/github.com/mattn/go-sqlite3:go_default_library",
+        "//vendor/github.com/opentracing/opentracing-go:go_default_library",
+        "//vendor/github.com/opentracing/opentracing-go/mocktracer:go_default_library",
+        "//vendor/github.com/stretchr/testify/assert:go_default_library",
+        "//vendor/github.com/stretchr/testify/require:go_default_library",
+    ],
+)

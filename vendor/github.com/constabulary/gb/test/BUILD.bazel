@@ -1,0 +1,35 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "gotest.go",
+        "resolve.go",
+        "test.go",
+        "testmain17.go",
+        "testmain18.go",
+    ],
+    importpath = "github.com/constabulary/gb/test",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/constabulary/gb:go_default_library",
+        "//vendor/github.com/constabulary/gb/internal/debug:go_default_library",
+        "//vendor/github.com/pkg/errors:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = [
+        "goversion12_test.go",
+        "goversion13_test.go",
+        "goversion14_test.go",
+        "goversion15_test.go",
+        "goversion16_test.go",
+        "goversion17_test.go",
+        "test_test.go",
+    ],
+    importpath = "github.com/constabulary/gb/test",
+    library = ":go_default_library",
+    deps = ["//vendor/github.com/constabulary/gb:go_default_library"],
+)

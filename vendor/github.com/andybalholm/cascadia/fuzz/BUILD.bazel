@@ -1,0 +1,9 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["fuzz.go"],
+    importpath = "github.com/andybalholm/cascadia/fuzz",
+    visibility = ["//visibility:public"],
+    deps = ["//vendor/github.com/andybalholm/cascadia:go_default_library"],
+)

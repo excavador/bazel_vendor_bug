@@ -1,0 +1,42 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+
+proto_library(
+    name = "wire_proto",
+    srcs = ["wire.proto"],
+    visibility = ["//visibility:public"],
+)
+
+go_proto_library(
+    name = "wire_go_proto",
+    importpath = "github.com/openzipkin/zipkin-go-opentracing/wire",
+    proto = ":wire_proto",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "carrier.go",
+        "gen.go",
+    ],
+    importpath = "github.com/openzipkin/zipkin-go-opentracing/wire",
+    library = ":wire_go_proto",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/openzipkin/zipkin-go-opentracing/flag:go_default_library",
+        "//vendor/github.com/openzipkin/zipkin-go-opentracing/types:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_xtest",
+    srcs = ["carrier_test.go"],
+    importpath = "github.com/openzipkin/zipkin-go-opentracing/wire_test",
+    deps = [
+        ":go_default_library",
+        "//vendor/github.com/openzipkin/zipkin-go-opentracing:go_default_library",
+        "//vendor/github.com/openzipkin/zipkin-go-opentracing/flag:go_default_library",
+        "//vendor/github.com/openzipkin/zipkin-go-opentracing/types:go_default_library",
+    ],
+)

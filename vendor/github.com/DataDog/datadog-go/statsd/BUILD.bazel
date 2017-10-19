@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["statsd.go"],
+    importpath = "github.com/DataDog/datadog-go/statsd",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["statsd_test.go"],
+    importpath = "github.com/DataDog/datadog-go/statsd",
+    library = ":go_default_library",
+)

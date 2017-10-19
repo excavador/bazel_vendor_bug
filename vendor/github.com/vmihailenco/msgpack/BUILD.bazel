@@ -1,0 +1,46 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "decode.go",
+        "decode_map.go",
+        "decode_number.go",
+        "decode_query.go",
+        "decode_slice.go",
+        "decode_string.go",
+        "decode_value.go",
+        "encode.go",
+        "encode_map.go",
+        "encode_number.go",
+        "encode_slice.go",
+        "encode_value.go",
+        "ext.go",
+        "msgpack.go",
+        "tag.go",
+        "time.go",
+        "types.go",
+    ],
+    importpath = "github.com/vmihailenco/msgpack",
+    visibility = ["//visibility:public"],
+    deps = ["//vendor/github.com/vmihailenco/msgpack/codes:go_default_library"],
+)
+
+go_test(
+    name = "go_default_xtest",
+    srcs = [
+        "bench_test.go",
+        "example_CustomEncoder_test.go",
+        "example_registerExt_test.go",
+        "example_test.go",
+        "ext_test.go",
+        "msgpack_test.go",
+        "types_test.go",
+    ],
+    importpath = "github.com/vmihailenco/msgpack_test",
+    deps = [
+        ":go_default_library",
+        "//vendor/github.com/vmihailenco/msgpack/codes:go_default_library",
+        "//vendor/gopkg.in/check.v1:go_default_library",
+    ],
+)

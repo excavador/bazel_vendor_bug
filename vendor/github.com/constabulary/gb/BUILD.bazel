@@ -1,0 +1,60 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "build.go",
+        "cgo.go",
+        "context.go",
+        "defaultcc.go",
+        "depfile.go",
+        "executor.go",
+        "gb.go",
+        "gc.go",
+        "goversion12.go",
+        "goversion13.go",
+        "goversion14.go",
+        "goversion15.go",
+        "goversion16.go",
+        "package.go",
+        "project.go",
+        "resolver.go",
+    ] + select({
+        "@io_bazel_rules_go//go/platform:darwin_amd64": [
+            "defaultcc_bsd.go",
+        ],
+        "//conditions:default": [],
+    }),
+    importpath = "github.com/constabulary/gb",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/constabulary/gb/internal/debug:go_default_library",
+        "//vendor/github.com/constabulary/gb/internal/depfile:go_default_library",
+        "//vendor/github.com/constabulary/gb/internal/fileutils:go_default_library",
+        "//vendor/github.com/constabulary/gb/internal/untar:go_default_library",
+        "//vendor/github.com/pkg/errors:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = [
+        "action_test.go",
+        "build_test.go",
+        "context_test.go",
+        "executor_test.go",
+        "gb_test.go",
+        "package_test.go",
+        "project_test.go",
+    ],
+    importpath = "github.com/constabulary/gb",
+    library = ":go_default_library",
+    deps = ["//vendor/github.com/pkg/errors:go_default_library"],
+)
+
+go_test(
+    name = "go_default_xtest",
+    srcs = ["example_test.go"],
+    importpath = "github.com/constabulary/gb_test",
+    deps = [":go_default_library"],
+)
